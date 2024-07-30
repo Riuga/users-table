@@ -1,0 +1,23 @@
+@mixin cell-styling($fontSize) {
+  padding: 1rem;
+  border: 1px solid black;
+  font-size: $fontSize;
+}
+
+.table {
+  max-width: 1200px;
+  width: 100vw;
+
+  table {
+    justify-content: space-between;
+    width: 100%;
+
+    th {
+      @include cell-styling(1.5rem);
+    }
+
+    td {
+      @include cell-styling(1rem);
+    }
+  }
+}
