@@ -16,7 +16,7 @@ export default function Table() {
     fetch('https://dummyjson.com/users')
       .then((response) => response.json())
       .then((data) => setUsers(data.users))
-      .catch((err) => console.log(console.log(err)))
+      .catch((err) => console.error(err))
   }, [])
 
   const sortData = useCallback(() => {

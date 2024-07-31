@@ -4,9 +4,9 @@ export function SortButton({ onChange, sortKey }) {
   }
   return (
     <select name='sort' onChange={handleChange}>
-      <option value='none'>None</option>
-      <option value='ascending'>Ascending</option>
-      <option value='descending'>Descending</option>
+      <option value='none'>-</option>
+      <option value='ascending'>↑</option>
+      <option value='descending'>↓</option>
     </select>
   )
 }
