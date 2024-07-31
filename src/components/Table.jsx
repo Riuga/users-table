@@ -9,7 +9,7 @@ export default function Table() {
   const [users, setUsers] = useState([])
   const [searchKey, setSearchKey] = useState('')
   const [selectedUser, setSelectedUser] = useState(null)
-  const [sortKey, setSortKey] = useState('firstName')
+  const [sortKey, setSortKey] = useState('id')
   const [sortOrder, setSortOrder] = useState('ascending')
 
   useEffect(() => {
@@ -20,7 +20,10 @@ export default function Table() {
   }, [])
 
   const sortData = useCallback(() => {
-    const sortedData = users.sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1))
+    const sortedData =
+      sortKey === 'address'
+        ? users.sort((a, b) => (a.address.city > b.address.city ? 1 : -1))
+        : users.sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1))
 
     if (sortOrder === 'descending') {
       sortedData.reverse()
@@ -29,12 +32,13 @@ export default function Table() {
     return sortedData
   }, [users, sortKey, sortOrder])
 
-  const changeSort = (key) => {
-    if (key === sortKey) {
-      setSortOrder(sortOrder === 'ascending' ? 'descending' : 'ascending')
+  const changeSort = (key, order) => {
+    if (order === 'none') {
+      setSortKey('id')
+      setSortOrder('ascending')
     } else {
       setSortKey(key)
-      setSortOrder('ascending')
+      setSortOrder(order)
     }
   }
 
@@ -48,7 +52,6 @@ export default function Table() {
 
   const selectUser = (user) => {
     setSelectedUser(user)
-    console.log(user)
   }
 
   const closeModal = () => {
@@ -63,49 +66,21 @@ export default function Table() {
         <thead>
           <tr>
             <th>
-              Full Name{' '}
-              <SortButton
-                onClick={() => changeSort('firstName')}
-                sortOrder={sortOrder}
-                sortKey={sortKey}
-                columnKey={'firstName'}
-              />
+              <p>Full Name</p>
+              <SortButton onChange={changeSort} sortKey='firstName' />
             </th>
             <th>
-              Age{' '}
-              <SortButton
-                onClick={() => changeSort('age')}
-                sortOrder={sortOrder}
-                sortKey={sortKey}
-                columnKey={'age'}
-              />
+              <p>Age</p>
+              <SortButton onChange={changeSort} sortKey='age' />
             </th>
             <th>
-              Gender{' '}
-              <SortButton
-                onClick={() => changeSort('gender')}
-                sortOrder={sortOrder}
-                sortKey={sortKey}
-                columnKey={'gender'}
-              />
+              <p>Gender</p>
+              <SortButton onChange={changeSort} sortKey='gender' />
             </th>
+            <th>Phone</th>
             <th>
-              Phone{' '}
-              <SortButton
-                onClick={() => changeSort('phone')}
-                sortOrder={sortOrder}
-                sortKey={sortKey}
-                columnKey={'phone'}
-              />
-            </th>
-            <th>
-              Address{' '}
-              <SortButton
-                onClick={() => changeSort('address.address')}
-                sortOrder={sortOrder}
-                sortKey={sortKey}
-                columnKey={'address.address'}
-              />
+              <p>Address</p>
+              <SortButton onChange={changeSort} sortKey='address' />
             </th>
           </tr>
         </thead>

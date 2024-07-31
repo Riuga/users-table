@@ -1,14 +1,12 @@
-export function SortButton({ sortKey, columnKey, sortOrder, onClick }) {
+export function SortButton({ onChange, sortKey }) {
+  const handleChange = (e) => {
+    onChange(sortKey, e.target.value)
+  }
   return (
-    <button
-      onClick={onClick}
-      className={`${
-        sortKey === columnKey && sortOrder === 'desc'
-          ? 'sort-button sort-reverse'
-          : 'sort-button'
-      }`}
-    >
-      ▲
-    </button>
+    <select name='sort' onChange={handleChange}>
+      <option value='none'>None</option>
+      <option value='ascending'>Ascending</option>
+      <option value='descending'>Descending</option>
+    </select>
   )
 }
